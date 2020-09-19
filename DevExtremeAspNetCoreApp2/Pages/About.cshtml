@@ -1,0 +1,26 @@
+@page
+@using DevExtremeAspNetCoreApp2.Models
+
+<h2 class="content-block">Raspored</h2>
+
+@(Html.DevExtreme().DataGrid<Ekipe>()
+        .ElementAttr(new { @class = "dx-card wide-card" })
+        .DataSource(d => d.Mvc().Controller("EkipeData").LoadAction("Get").Key("Id"))
+        .ShowBorders(false)
+        .FilterRow(f => f.Visible(true))
+        .FocusedRowEnabled(true)
+        .FocusedRowIndex(0)
+        .ColumnAutoWidth(true)
+        .ColumnHidingEnabled(true)
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.Id);
+            columns.AddFor(m => m.Naziv);
+        })
+        .Paging(p => p.PageSize(10))
+        .Pager(p => p
+            .ShowPageSizeSelector(true)
+            .AllowedPageSizes(new[] { 5, 10, 20 })
+            .ShowInfo(true)
+        )
+)

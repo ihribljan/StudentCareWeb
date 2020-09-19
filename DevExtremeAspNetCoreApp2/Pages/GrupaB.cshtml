@@ -1,0 +1,43 @@
+﻿@page
+@using DevExtremeAspNetCoreApp2.Models
+
+<h2 class="content-block">Grupa B</h2>
+
+@(Html.DevExtreme().DataGrid<GrupaB>()
+    .ID("myDataGrid1")
+                        .ElementAttr(new { @class = "dx-card wide-card" })
+                        .DataSource(d => d.Mvc().Controller("GrupaB").LoadAction("Get").Key("Id"))
+                        .ShowBorders(false)
+                        .FocusedRowEnabled(true)
+                        .FocusedRowIndex(0)
+                        .ColumnAutoWidth(true)
+                        .ColumnHidingEnabled(false)
+                        .Columns(columns =>
+                        {
+                            columns.AddFor(m => m.ekipa).MinWidth(40).Caption("Ekipa");
+                            columns.AddFor(m => m.OU).MinWidth(20).Caption("ODIG.");
+                            columns.AddFor(m => m.GR).MinWidth(20).Caption("G.R.");
+                            columns.AddFor(m => m.Bodovi).MinWidth(20).Caption("BOD");
+                        })
+                        .Paging(p => p.PageSize(4))
+                        .Scrolling(s => { s.UseNative(false); })
+                        .Pager(p => p
+                            .ShowPageSizeSelector(true)
+                            .AllowedPageSizes(new[] { 5, 10, 20 })
+                            .ShowInfo(true)
+                        )
+)
+
+
+<script>
+
+    $(function () {
+        var layoutScrollView = $("#layout-drawer-scrollview").dxScrollView("instance");
+        var dataGrid = $("#myDataGrid1").dxDataGrid("instance");
+
+        layoutScrollView.on("scroll", function (e) {
+            dataGrid.getController("data").setViewportPosition(e.scrollOffset.top);
+        })
+    });
+
+</script>

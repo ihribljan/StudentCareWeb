@@ -1,0 +1,52 @@
+﻿@page
+@using DevExtremeAspNetCoreApp2.Models
+
+<h2 class="content-block">Raspored</h2>
+
+@(Html.DevExtreme().DataGrid<Rasporedi>()
+                    .ElementAttr(new { @class = "dx-card wide-card" })
+                    .DataSource(d => d.Mvc().Controller("RasporedData").LoadAction("Get").Key("Id"))
+                    .ShowBorders(false)
+                    .NoDataText("Nema zapisa")
+                    .FocusedRowEnabled(true)
+                    .FocusedRowIndex(0)
+                    .ColumnAutoWidth(true)
+                    .ColumnHidingEnabled(true)
+                    .Columns(columns =>
+                    {
+                        columns.AddFor(m => m.Id).Caption("Id").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.Vrijeme).Caption("Vrijeme").MinWidth(80);
+                        columns.AddFor(m => m.Grupa).Caption("Grupa").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.DomacinId).Caption("Domaćin").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.GoloviGost).Caption("Golovi gost").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.GostId).Caption("GOst").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.GoloviDomacin).Caption("Id").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.GoloviGost).Caption("Id").MinWidth(40).HidingPriority(0);
+                        columns.AddFor(m => m.GoloviGost).Caption("Id").MinWidth(40).HidingPriority(0);
+                        /*columns.AddFor(m => m.DomacinId).MinWidth(100).Caption("Ekipe")
+                              .CellTemplate(@<text>
+                                        <div style="font-size: 1.2em; font-weight: 500;">[%- m.DomacinId %]</div>
+                                        <div>[%- m.GostId %]</div>
+                                    </text>);*/
+                    })
+                    .Paging(p => p.PageSize(10))
+                    .Scrolling(s=>{ s.UseNative(false); })
+                    .Pager(p => p
+                        .ShowPageSizeSelector(true)
+                        .AllowedPageSizes(new[] { 5, 10, 20 })
+                        .ShowInfo(true)
+                    )
+)
+
+<script>
+
+    $(function () {
+        var layoutScrollView = $("#layout-drawer-scrollview").dxScrollView("instance");
+        var dataGrid = $("#myDataGrid1").dxDataGrid("instance");
+
+        layoutScrollView.on("scroll", function (e) {
+            dataGrid.getController("data").setViewportPosition(e.scrollOffset.top);
+        })
+    });
+
+</script>

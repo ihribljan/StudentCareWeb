@@ -1,0 +1,57 @@
+@page
+@using DevExtremeAspNetCoreApp2.Models
+
+<h2 class="content-block">Raspored</h2>
+
+
+@(Html.DevExtreme().DataGrid<Rasporedi>()
+        .ID("myDataGrid1")
+                                .ElementAttr(new { @class = "dx-card wide-card" })
+                                .DataSource(d => d.Mvc().Controller("RasporedData").LoadAction("Get").Key("Id"))
+                                .ShowBorders(false)
+                                .NoDataText("Nema zapisa")
+                                .FocusedRowEnabled(true)
+                                .FocusedRowIndex(0)
+                                .ColumnAutoWidth(true)
+                                .ColumnHidingEnabled(false)
+                                .Columns(columns =>
+                                {
+                                    columns.AddFor(m => m.Vrijeme).MinWidth(20).Caption("Sat");
+                                    columns.AddFor(m => m.Grupa).MinWidth(15).Caption("G");
+                                    columns.AddFor(m => m.domacin).MinWidth(40).Caption("Ekipe")
+                                      .CellTemplate(@<text>
+                                        <div style="font-size: 1.0em; font-weight: 500;">[%- data.domacin %]</div>
+                                        <div style="font-size: 1.0em; font-weight: 500;">[%- data.gost %]</div>
+                                    </text>);
+                                    columns.AddFor(m => m.GoloviDomacin).MinWidth(40).Caption("Rezultat")
+                                    .CellTemplate(@<text>
+                                        <div style="font-size: 1.0em; font-weight: 500;">[%- data.GoloviDomacin %]</div>
+                                        <div style="font-size: 1.0em; font-weight: 500;">[%- data.GoloviGost %]</div>
+                                    </text>);
+                                    columns.Add().Type(GridCommandColumnType.Selection)
+                                            .CellTemplate(@<text>Custom text</text>)
+                                            .HeaderCellTemplate(@<text>Cus text </text>);
+                                })
+                                .Paging(p => p.PageSize(32))
+                                .Scrolling(s => { s.UseNative(false); })
+                                .Pager(p => p
+                                    .ShowPageSizeSelector(true)
+                                    .AllowedPageSizes(new[] { 5, 10, 20 })
+                                    .ShowInfo(true)
+                                )
+)
+
+<script>
+
+    $(function () {
+        var layoutScrollView = $("#layout-drawer-scrollview").dxScrollView("instance");
+        var dataGrid = $("#myDataGrid1").dxDataGrid("instance");
+
+        var button = $("button").dxDataGrid("instance");
+
+        layoutScrollView.on("scroll", function (e) {
+            dataGrid.getController("data").setViewportPosition(e.scrollOffset.top);
+        })
+    });
+
+</script>

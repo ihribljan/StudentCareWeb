@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <UserSecretsId>41465cad-68cc-4717-afbb-a4df3bdcffda</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="ORMDataModel.xpo" />
+      <None Remove="ORMDataModel.xpo.diagram" />
+    </ItemGroup>
+
+    <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.6.1" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="20.1.4" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="Pages\Ekipe.cshtml">
+        <Pack>$(IncludeRazorContentInPack)</Pack>
+      </Content>
+      <Content Update="Pages\GrupaB.cshtml">
+        <Pack>$(IncludeRazorContentInPack)</Pack>
+      </Content>
+      <Content Update="Pages\GrupaC.cshtml">
+        <Pack>$(IncludeRazorContentInPack)</Pack>
+      </Content>
+      <Content Update="Pages\GrupaD.cshtml">
+        <Pack>$(IncludeRazorContentInPack)</Pack>
+      </Content>
+    </ItemGroup>
+
+    <ProjectExtensions><VisualStudio><UserProperties TemplateFeatures="NETCORE" /></VisualStudio></ProjectExtensions>
+
+</Project>

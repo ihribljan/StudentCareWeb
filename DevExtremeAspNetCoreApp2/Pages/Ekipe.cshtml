@@ -1,0 +1,40 @@
+﻿@page
+@using DevExtremeAspNetCoreApp2.Models
+
+<h2 class="content-block">Ekipe</h2>
+
+@(Html.DevExtreme().DataGrid<Ekipe>()
+    .ID("myDataGrid1")
+                    .ElementAttr(new { @class = "dx-card wide-card" })
+                    .DataSource(d => d.Mvc().Controller("EkipeData").LoadAction("Get").Key("Id"))
+                    .ShowBorders(false)
+                    .FocusedRowEnabled(true)
+                    .FocusedRowIndex(0)
+                    .ColumnHidingEnabled(true)
+                    .Columns(columns =>
+                    {
+                        columns.AddFor(m => m.Naziv).Caption("Naziv");
+
+ 
+                        })
+                    .Paging(p => p.PageSize(16))
+                    .Scrolling(s => { s.UseNative(false); })
+                    .Pager(p => p
+                        .ShowPageSizeSelector(true)
+                        .AllowedPageSizes(new[] { 5, 10, 20 })
+                        .ShowInfo(true)
+                    )
+)
+
+<script>
+
+    $(function () {
+        var layoutScrollView = $("#layout-drawer-scrollview").dxScrollView("instance");
+        var dataGrid = $("#myDataGrid1").dxDataGrid("instance");
+
+        layoutScrollView.on("scroll", function (e) {
+            dataGrid.getController("data").setViewportPosition(e.scrollOffset.top);
+        })
+    });
+
+</script>
